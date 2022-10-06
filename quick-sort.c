@@ -82,10 +82,17 @@ int main(int argc, char* argv[argc+1]) {
             printf("%.2f ", list[i]);
         }
         printf("\n");
-    }
 
-    test_swap();
-    test_quicksort();
+        quicksort(list, 0, size-1);
+
+        for (size_t i = 0; i < size; ++i) {
+            printf("%.2f ", list[i]);
+        }
+        printf("\n");
+    } else {
+        test_swap();
+        test_quicksort();
+    }
 
     return EXIT_SUCCESS;
 }
