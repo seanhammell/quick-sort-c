@@ -6,12 +6,32 @@
 #define KRED "\x1B[31m"
 #define KGRN "\x1B[32m"
 
+void quicksort(double* list) {
+    return;
+}
+
 void swap(double* px, double* py) {
     double temp;
 
     temp = *px;
     *px = *py;
     *py = temp;
+}
+
+void test_quicksort() {
+    double list[5] = {5, 1, 4, 2, 3};
+    double checklist[5] = {1, 2, 3, 4, 5};
+
+    quicksort(list);
+
+    for(int i = 0; i < 5; ++i) {
+        if (list[i] != checklist[i]) {
+            printf("%s[FAILED]%s test quick sort\n", KRED, KNRM);
+            return;
+        } 
+    }
+
+    printf("%s[PASSED]%s test quick sort\n", KGRN, KNRM);
 }
 
 void test_swap() {
@@ -42,6 +62,7 @@ int main(int argc, char* argv[argc+1]) {
     }
 
     test_swap();
+    test_quicksort();
 
     return EXIT_SUCCESS;
 }
