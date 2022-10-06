@@ -6,10 +6,6 @@
 #define KRED "\x1B[31m"
 #define KGRN "\x1B[32m"
 
-void quicksort(double* list) {
-    return;
-}
-
 void swap(double* px, double* py) {
     double temp;
 
@@ -18,20 +14,30 @@ void swap(double* px, double* py) {
     *py = temp;
 }
 
-void test_quicksort() {
-    double list[5] = {5, 1, 4, 2, 3};
-    double checklist[5] = {1, 2, 3, 4, 5};
+int partition(double* list, int low, int high) {
+    double pivot = list[(low + high) / 2];
 
-    quicksort(list);
+    int i = low - 1;
+    int j = high + 1;
 
-    for(int i = 0; i < 5; ++i) {
-        if (list[i] != checklist[i]) {
-            printf("%s[FAILED]%s test quick sort\n", KRED, KNRM);
-            return;
-        } 
+    for(;;) {
+        while (list[++i] < pivot);
+        while (list[--j] > pivot);
+
+        if (i >= j) {
+            return j;
+        }
+
+        swap(&list[i], &list[j]);
     }
+}
 
-    printf("%s[PASSED]%s test quick sort\n", KGRN, KNRM);
+void quicksort(double* list, int low, int high) {
+    if (low >= 0 && low < high) {
+        int p = partition(list, low, high);
+        quicksort(list, low, p);
+        quicksort(list, p+1, high);
+    }
 }
 
 void test_swap() {
@@ -48,6 +54,23 @@ void test_swap() {
     }
 
     printf("%s[PASSED]%s test swap\n", KGRN, KNRM);
+}
+
+void test_quicksort() {
+    int size = 5;
+    double list[] = {5, 1, 4, 2, 3};
+    double checklist[] = {1, 2, 3, 4, 5};
+
+    quicksort(list, 0, size-1);
+
+    for(int i = 0; i < 5; ++i) {
+        if (list[i] != checklist[i]) {
+            printf("%s[FAILED]%s test quick sort\n", KRED, KNRM);
+            return;
+        } 
+    }
+
+    printf("%s[PASSED]%s test quick sort\n", KGRN, KNRM);
 }
 
 int main(int argc, char* argv[argc+1]) {
